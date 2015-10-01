@@ -32,6 +32,7 @@
 #include "version.h"
 #include "computer.h"
 #include "version.h"
+#include "assembly_error.h"
 
 using namespace std;
 using namespace AutoVersion;
@@ -80,40 +81,51 @@ int main(int argc, char *argv[])
     }
     else
         filename = argv[1];
-    Computer *c = new Computer();
-    c->loadProgram(filename);
-    int scelta;
-    bool passo = true;
-    do
-    {
-        cout << endl;
-        if (passo)
+    try{
+        Computer *c = new Computer();
+        c->loadProgram(filename);
+        int scelta;
+        bool passo = true;
+        do
         {
-            menu();
-            cin >> scelta;
-            switch(scelta)
+            cout << endl;
+            if (passo)
             {
-                case 1: //passo = false;
-                    c->run();
-                    break;
-                case 2: ;
-                    cout << "Insert the range to view the values of registers (e.g. from 1 to 5 will show R1, R2, R3, R4, R5)" << endl;
-                    range = getRange();
-                    registers = c->getRegisters(range.first,range.second);
-                    for (auto i: registers)
-                        cout << i.first << std::showbase << std::setw(8) <<   hex << (uint16_t)i.second << std::setw(8) << dec << (uint16_t)i.second << endl;
-                    break;
-                case 3: ;
-                    cout << "Insert the range to view the content of the memory (e.g. from 256 to 512 will show the content of the memory from address 256 to address 512 included)" << endl;
-                    range = getRange();
-                    memory = c->getMemory(range.first,range.second);
-                    for (auto i: memory)
-                        cout <<  i.first << std::showbase << std::setw(8) << hex << (unsigned int)i.second << std::setw(8) << dec << (unsigned int)i.second << endl;
+                menu();
+                cin >> scelta;
+                switch(scelta)
+                {
+                    case 1: //passo = false;
+                        c->run();
+                        break;
+                    case 2: ;
+                        cout << "Insert the range to view the values of registers (e.g. from 1 to 5 will show R1, R2, R3, R4, R5)" << endl;
+                        range = getRange();
+                        registers = c->getRegisters(range.first,range.second);
+                        for (auto i: registers)
+                            cout << i.first << std::showbase << std::setw(8) <<   hex << (uint16_t)i.second << std::setw(8) << dec << (uint16_t)i.second << endl;
+                        break;
+                    case 3: ;
+                        cout << "Insert the range to view the content of the memory (e.g. from 256 to 512 will show the content of the memory from address 256 to address 512 included)" << endl;
+                        range = getRange();
+                        memory = c->getMemory(range.first,range.second);
+                        for (auto i: memory)
+                            cout <<  i.first << std::showbase << std::setw(8) << hex << (unsigned int)i.second << std::setw(8) << dec << (unsigned int)i.second << endl;
 
-                    break;
+                        break;
+                }
             }
-        }
-    }while (scelta != 0);
+        }while (scelta != 0);
+    }
+    catch(assembly_error e)
+    {
+        cout << e.what() << endl;
+    }
+    catch(exception e)
+    {
+        cout << e.what() << endl;
+    }
+
     return 0;
 }
 
