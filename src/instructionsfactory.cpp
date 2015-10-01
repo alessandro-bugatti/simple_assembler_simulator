@@ -49,6 +49,8 @@ Instruction* InstructionsFactory::CreateInstruction(Computer *c,const string& li
         return new Store(c, parameters);
     if (Utils::areEquals(type,"ADD"))
         return new Add(c, parameters);
+    if (Utils::areEquals(type,"SUB"))
+        return new Add(c, parameters);
     if (Utils::areEquals(type,"LOAD"))
         return new Load(c, parameters);
     if (Utils::areEquals(type,"MOVE"))
