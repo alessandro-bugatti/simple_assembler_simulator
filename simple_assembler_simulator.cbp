@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="simple_assembler_simulator" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/simple_assembler_simulator" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/simple_assembler_simulator" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="include/add.h" />
+		<Unit filename="include/assembly_error.h" />
+		<Unit filename="include/beq.h" />
+		<Unit filename="include/bge.h" />
+		<Unit filename="include/bgt.h" />
+		<Unit filename="include/ble.h" />
+		<Unit filename="include/blt.h" />
+		<Unit filename="include/bne.h" />
+		<Unit filename="include/branch.h" />
+		<Unit filename="include/computer.h" />
+		<Unit filename="include/end.h" />
+		<Unit filename="include/instruction.h" />
+		<Unit filename="include/instructionsfactory.h" />
+		<Unit filename="include/load.h" />
+		<Unit filename="include/loadih.h" />
+		<Unit filename="include/loadil.h" />
+		<Unit filename="include/move.h" />
+		<Unit filename="include/program.h" />
+		<Unit filename="include/store.h" />
+		<Unit filename="include/utils.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="src/add.cpp" />
+		<Unit filename="src/assembly_error.cpp" />
+		<Unit filename="src/beq.cpp" />
+		<Unit filename="src/bge.cpp" />
+		<Unit filename="src/bgt.cpp" />
+		<Unit filename="src/ble.cpp" />
+		<Unit filename="src/blt.cpp" />
+		<Unit filename="src/bne.cpp" />
+		<Unit filename="src/branch.cpp" />
+		<Unit filename="src/computer.cpp" />
+		<Unit filename="src/end.cpp" />
+		<Unit filename="src/instruction.cpp" />
+		<Unit filename="src/instructionsfactory.cpp" />
+		<Unit filename="src/load.cpp" />
+		<Unit filename="src/loadih.cpp" />
+		<Unit filename="src/loadil.cpp" />
+		<Unit filename="src/move.cpp" />
+		<Unit filename="src/program.cpp" />
+		<Unit filename="src/store.cpp" />
+		<Unit filename="src/utils.cpp" />
+		<Unit filename="version.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<AutoVersioning>
+				<Scheme minor_max="10" build_max="0" rev_max="0" rev_rand_max="10" build_times_to_increment_minor="100" />
+				<Settings autoincrement="1" date_declarations="1" use_define="0" update_manifest="1" do_auto_increment="0" ask_to_increment="0" language="C++" svn="0" svn_directory="" header_path="version.h" />
+				<Changes_Log show_changes_editor="0" app_title="released version %M.%m.%b of %p" changeslog_path="ChangesLog.txt" />
+				<Code header_guard="VERSION_H" namespace="AutoVersion" prefix="" />
+			</AutoVersioning>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
