@@ -6,7 +6,7 @@
 
 using namespace std;
 
-#include <instruction.h>
+#include "instruction.h"
 
 class Store : public Instruction
 {

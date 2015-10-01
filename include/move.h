@@ -28,7 +28,7 @@
 #ifndef MOVE_H
 #define MOVE_H
 
-#include <instruction.h>
+#include "instruction.h"
 
 
 class Move : public Instruction
