@@ -3,6 +3,7 @@
 	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="simple_assembler_simulator" />
+		<Option makefile="makefile" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -24,6 +25,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -54,6 +56,7 @@
 		<Unit filename="include/move.h" />
 		<Unit filename="include/program.h" />
 		<Unit filename="include/store.h" />
+		<Unit filename="include/sub.h" />
 		<Unit filename="include/utils.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/add.cpp" />
@@ -75,6 +78,7 @@
 		<Unit filename="src/move.cpp" />
 		<Unit filename="src/program.cpp" />
 		<Unit filename="src/store.cpp" />
+		<Unit filename="src/sub.cpp" />
 		<Unit filename="src/utils.cpp" />
 		<Unit filename="version.h" />
 		<Extensions>
