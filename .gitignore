@@ -3,3 +3,5 @@ doxygen/
 obj/
 *.asm
 *.tmp
+simple_assembler_simulator.layout
+simple_assembler_simulator.depend
