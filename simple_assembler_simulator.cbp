@@ -12,6 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option parameters="test.asm" />
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
@@ -54,6 +55,7 @@
 		<Unit filename="include/loadih.h" />
 		<Unit filename="include/loadil.h" />
 		<Unit filename="include/move.h" />
+		<Unit filename="include/mul.h" />
 		<Unit filename="include/program.h" />
 		<Unit filename="include/store.h" />
 		<Unit filename="include/sub.h" />
@@ -76,6 +78,7 @@
 		<Unit filename="src/loadih.cpp" />
 		<Unit filename="src/loadil.cpp" />
 		<Unit filename="src/move.cpp" />
+		<Unit filename="src/mul.cpp" />
 		<Unit filename="src/program.cpp" />
 		<Unit filename="src/store.cpp" />
 		<Unit filename="src/sub.cpp" />
