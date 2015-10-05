@@ -10,7 +10,7 @@ install:
 - export CXX="g++-4.8"
 
 before_script:
-- g++ --version
+- $(CXX) --version
 - cd test
 
 script: ./make
