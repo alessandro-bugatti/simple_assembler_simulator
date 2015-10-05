@@ -2,4 +2,4 @@ language: cpp
 
 before_script: cd test
 
-script: make
+script: ./make
