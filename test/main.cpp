@@ -4,7 +4,7 @@
 #include "computer.h"
 #include "instruction.h"
 #include "loadil.h"
-#include "loadhl.h"
+#include "loadih.h"
 #include "instructionsfactory.h"
 
 TEST_CASE( "LoadiL", "[instruction][load]" ) {
@@ -30,11 +30,11 @@ TEST_CASE( "LoadiL", "[instruction][load]" ) {
         REQUIRE_NOTHROW(LoadiL(&c,string("RA 0xFF")));
     }
     SECTION( "Execution"){
-        REQUIRE_NOTHROW(LoadhL(&c,string("R1 0x01")).execute());
+        REQUIRE_NOTHROW(LoadiH(&c,string("R1 0x01")).execute());
         REQUIRE(c.getRegisterValue("R1") == 0x0100);
         REQUIRE_NOTHROW(LoadiL(&c,string("R1 0x01")).execute());
         REQUIRE(c.getRegisterValue("R1") == 0x0101);
-        REQUIRE_NOTHROW(LoadhL(&c,string("RA 0x1F")).execute());
+        REQUIRE_NOTHROW(LoadiH(&c,string("RA 0x1F")).execute());
         REQUIRE(c.getRegisterValue("RA") == 0x1F00);
     }
 }
@@ -48,7 +48,7 @@ TEST_CASE( "InstructionFactory", "[instruction][factory]" ) {
     }
     SECTION( "Istructions are correct" ) {
         REQUIRE_NOTHROW(factory->CreateInstruction(&c,"LOADiL R1 0x34"));
-        REQUIRE_NOTHROW(factory->CreateInstruction(&c,"LOADhL R1 0x34"));
+        REQUIRE_NOTHROW(factory->CreateInstruction(&c,"LOADiH R1 0x34"));
     }
 }
 
