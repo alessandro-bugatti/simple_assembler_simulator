@@ -1,15 +1,14 @@
-sudo:false
-
+sudo: false
 language: cpp
 compiler: g++
 
 addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - gcc-4.8
+            - g++-4.8
 
 before_script:
 - cd test
