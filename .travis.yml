@@ -10,7 +10,8 @@ install:
 - export CXX="g++-4.8"
 
 before_script:
-- $(CXX) --version
 - cd test
 
-script: ./make
+script: 
+- "bash -c ./build.sh"
+- ./test
