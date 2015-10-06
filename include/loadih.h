@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include <instruction.h>
+#include "instruction.h"
 
 
 class LoadiH : public Instruction

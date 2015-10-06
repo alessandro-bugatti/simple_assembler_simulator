@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     try{
         Computer *c = new Computer();
         c->loadProgram(filename);
-        int scelta;
+        int scelta = 1;
         bool passo = true;
         do
         {
