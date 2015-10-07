@@ -48,7 +48,7 @@ void menu()
 
 void header()
 {
-    cout << "Assembly simulator 0.1" << endl;
+    cout << "Assembly simulator" << endl;
     cout << "Version " << MAJOR << "." << MINOR << "." << BUILD << "." << REVISION
          << " Builds count:" << BUILDS_COUNT << endl;
     cout << "Copyright 2015 - Alessandro Bugatti" << endl;
