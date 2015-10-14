@@ -1,7 +1,7 @@
 # Simple Assembler Simulator
 [![Build Status](https://travis-ci.org/alessandro-bugatti/simple_assembler_simulator.svg?branch=master)](https://travis-ci.org/alessandro-bugatti/simple_assembler_simulator)
 
-Simple Assembler Simulator has been developed to help the students of the "Elementi di Informatica e Programmazione" at the University of Brescia.
+Simple Assembler Simulator has been developed to help the students of the "Elementi di Informatica e Programmazione" at the University of Brescia. See the [Wiki](https://github.com/alessandro-bugatti/simple_assembler_simulator/wiki) for more information.
 
 ## The Assembly language
 
