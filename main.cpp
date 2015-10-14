@@ -29,7 +29,9 @@
 #include <chrono>
 #include <thread>
 #include <iomanip>
+#include <sstream>
 #include "version.h"
+#include "utils.h"
 #include "computer.h"
 #include "version.h"
 #include "assembly_error.h"
@@ -55,13 +57,55 @@ void header()
 
 }
 
+void memory_dump(vector<pair <unsigned int, unsigned char>> memory)
+{
+    const int width = 14;
+    const int width_s = width - 2;
+    cout << std::setw(width) << "Addr(hex) |"
+    << std::setw(width) << "Addr(dec) |"
+    << std::setw(width) << "Value(hex) |"
+    << std::setw(width) << "Value(dec) |" << endl;
+    for (int i = 0; i < width*4; i++)
+        cout << '-';
+    cout << endl;
+    for (auto i: memory)
+        cout << std::showbase
+        << std::setw(width_s) << std::hex << i.first << " |"
+        << std::setw(width_s) << std::dec <<  i.first << " |"
+        << std::setw(width_s) << std::hex << (unsigned int)i.second << " |"
+        << std::setw(width_s) << std::dec << (unsigned int)i.second << " |" <<endl;
+}
+
 pair <unsigned int, unsigned int> getRange()
 {
     unsigned int from, to;
+    string s;
+    stringstream ss;
     cout << "From: ";
-    cin >> from;
+    cin >> s;
+    if (Utils::isAddressValue(s))
+    {
+        ss << std::hex << s;
+        ss >> from;
+    }
+    else
+    {
+        ss << std::dec << s;
+        ss >> from;
+    }
+    ss.clear();
     cout << "To: ";
-    cin >> to;
+    cin >> s;
+    if (Utils::isAddressValue(s))
+    {
+        ss << std::hex << s;
+        ss >> to;
+    }
+    else
+    {
+        ss << std::dec << s;
+        ss >> to;
+    }
     return make_pair(from,to);
 }
 
@@ -106,12 +150,10 @@ int main(int argc, char *argv[])
                             cout << i.first << std::showbase << std::setw(8) <<   hex << (uint16_t)i.second << std::setw(8) << dec << (uint16_t)i.second << endl;
                         break;
                     case 3: ;
-                        cout << "Insert the range to view the content of the memory (e.g. from 256 to 512 will show the content of the memory from address 256 to address 512 included)" << endl;
+                        cout << "Insert the range to view the content of the memory, the values can be either hex or decimal number (e.g. from 256 (0x100) to 512 (0x200) will show the content of the memory from address 256 (0x100) to address 512 (0x200) included)" << endl;
                         range = getRange();
                         memory = c->getMemory(range.first,range.second);
-                        for (auto i: memory)
-                            cout <<  i.first << std::showbase << std::setw(8) << hex << (unsigned int)i.second << std::setw(8) << dec << (unsigned int)i.second << endl;
-
+                        memory_dump(memory);
                         break;
                 }
             }
