@@ -57,6 +57,22 @@ void header()
 
 }
 
+void registers_dump(vector<pair <string, unsigned int>> registers)
+{
+    const int width = 14;
+    const int width_s = width - 2;
+    cout << std::setw(width) << "Register |"
+    << std::setw(width) << "Value(hex) |"
+    << std::setw(width) << "Value(dec) |" << endl;
+    for (int i = 0; i < width*3; i++)
+        cout << '-';
+    cout << endl;
+    for (auto i: registers)
+        cout << std::showbase << std::setw(width_s) << i.first << " |"
+        << std::setw(width_s) << std::hex << (uint16_t)i.second << " |"
+        << std::setw(width_s) << std::dec << (uint16_t)i.second << " |" << endl;
+}
+
 void memory_dump(vector<pair <unsigned int, unsigned char>> memory)
 {
     const int width = 14;
@@ -146,8 +162,7 @@ int main(int argc, char *argv[])
                         cout << "Insert the range to view the values of registers (e.g. from 1 to 5 will show R1, R2, R3, R4, R5)" << endl;
                         range = getRange();
                         registers = c->getRegisters(range.first,range.second);
-                        for (auto i: registers)
-                            cout << i.first << std::showbase << std::setw(8) <<   hex << (uint16_t)i.second << std::setw(8) << dec << (uint16_t)i.second << endl;
+                        registers_dump(registers);
                         break;
                     case 3: ;
                         cout << "Insert the range to view the content of the memory, the values can be either hex or decimal number (e.g. from 256 (0x100) to 512 (0x200) will show the content of the memory from address 256 (0x100) to address 512 (0x200) included)" << endl;
