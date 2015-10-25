@@ -40,6 +40,7 @@
 		</Compiler>
 		<Unit filename="include/add.h" />
 		<Unit filename="include/assembly_error.h" />
+		<Unit filename="include/b.h" />
 		<Unit filename="include/beq.h" />
 		<Unit filename="include/bge.h" />
 		<Unit filename="include/bgt.h" />
@@ -63,6 +64,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/add.cpp" />
 		<Unit filename="src/assembly_error.cpp" />
+		<Unit filename="src/b.cpp" />
 		<Unit filename="src/beq.cpp" />
 		<Unit filename="src/bge.cpp" />
 		<Unit filename="src/bgt.cpp" />

@@ -13,6 +13,7 @@
 #include "bge.h"
 #include "beq.h"
 #include "bne.h"
+#include "b.h"
 #include "end.h"
 #include "computer.h"
 #include "utils.h"
@@ -71,6 +72,8 @@ Instruction* InstructionsFactory::CreateInstruction(Computer *c,const string& li
         return new Beq(c, parameters);
     if (Utils::areEquals(type,"BNE"))
         return new Bne(c, parameters);
+    if (Utils::areEquals(type,"B"))
+        return new B(c, parameters);
     if (Utils::areEquals(type,"END"))
         return new End(c, parameters);
 

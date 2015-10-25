@@ -1,5 +1,3 @@
-#include <typeinfo>
-
 using namespace std;
 
 #include "branch.h"
