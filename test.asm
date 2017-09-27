@@ -1,6 +1,9 @@
-#Exercise 2 from http://chronus.ing.unibs.it/didattica/eip/hardware-e-sistema-operativo/
+# Exercise 
+# Write a program to copy the memory content from address 0x64 until 
+# address 0x3E6 into the memory area starting from address 0x3E8
 
-#Preload
+# Preload data into memory from 0x64 to 0x3E6. 
+# The data will be integer numbers from 1 to 449
 LOADiH R1 0x00 
 LOADiL R1 0x64 
 LOADiH R2 0x03 
