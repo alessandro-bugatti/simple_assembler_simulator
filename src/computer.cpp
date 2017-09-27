@@ -94,7 +94,7 @@ vector<pair<unsigned int,uint8_t>> Computer::getMemory(unsigned int from,unsigne
 {
     vector<pair<unsigned int,uint8_t>> temp;
     for (unsigned int i = from; i <= to; i++)
-        temp.push_back(make_pair(i, memory[i]));
+        temp.push_back(make_pair(i, getMemoryValue(i)));
     return temp;
 }
 
