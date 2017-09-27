@@ -15,6 +15,7 @@
 #include "bne.h"
 #include "b.h"
 #include "end.h"
+#include "print.h"
 #include "computer.h"
 #include "utils.h"
 #include "assembly_error.h"
@@ -76,6 +77,7 @@ Instruction* InstructionsFactory::CreateInstruction(Computer *c,const string& li
         return new B(c, parameters);
     if (Utils::areEquals(type,"END"))
         return new End(c, parameters);
-
+    if (Utils::areEquals(type, "PRINT"))
+        return new Print(c, parameters);
     throw assembly_error("Instruction not found: " + type + " " + parameters );
 }
