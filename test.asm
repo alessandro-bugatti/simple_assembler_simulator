@@ -23,5 +23,7 @@ CICLO: LOAD R4 R1
        STORE R3 R4
        ADD R1 R1 0x2
        ADD R3 R3 0x2
+       PRINT R2
        BLE R1 R2 CICLO
+       PRINT 0x490
 FINE:  END
