@@ -11,8 +11,8 @@ The table below can be used as reference to the language.
 
 Instruction|How it works|Addressing mode
 ---|---|---|
-LOADiL RX Val|RX<sub>1-8</sub> &#8592; Val|Register/Immediate with hex coding
-LOADiH RX Val|RX<sub>9-16</sub> &#8592; Val|Register/Immediate with hex coding
+LOADiL RX Val|RX<sub>1-8</sub> &#8592; Val|Register/Immediate with hex coding (bits from 1 to 8)
+LOADiH RX Val|RX<sub>9-16</sub> &#8592; Val|Register/Immediate with hex coding (bits from 9 to 16)
 ADD RX RY Val|RX &#8592; RY + Val|Register/Register/Immediate with hex coding
 ADD RX RY RZ|RX &#8592; RY + RZ|Register/Register/Register with hex coding
 SUB RX RY Val|RX &#8592; RY - Val|Register/Register/Immediate with hex coding
