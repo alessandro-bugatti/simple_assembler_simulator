@@ -1,4 +1,8 @@
-#Exercise 3 from http://chronus.ing.unibs.it/didattica/eip/hardware-e-sistema-operativo/
+# Scrivere il programma Assembly che memorizza nell’area di memoria 
+# (contigua) la cui prima parola ha indirizzo 0×64 la codifica ASCII 
+# delle 26 lettere dell’alfabeto, sapendo che il codice ASCII 
+# codifica la lettera ‘a’ con 0×61 e la codifica della lettera ‘z’ è 
+# 0x7A.
        LOADiL R1 0x64
        LOADiH R1 0x00
        LOADiL R2 0x61
