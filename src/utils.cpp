@@ -35,3 +35,11 @@ bool Utils::areEquals(const string& s1, const string& s2)
 {
     return s1 == s2;
 }
+
+bool Utils::containCode(const string& s)
+{
+    for (auto i: s)
+        if (i != ' ' && i != '\t')
+            return true;
+    return false;
+}
