@@ -25,6 +25,7 @@ class Utils
          */
 
         static bool areEquals(const string& s1, const string& s2);
+        static bool containCode(const string& s);
     protected:
     private:
 

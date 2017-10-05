@@ -18,36 +18,43 @@ Program::Program(Computer *c, const string& filename)
     //Retrieve and save the labels in the asm file
     while(getline(in,line))
     {
-        //Trim initial spaces
-        size_t first = line.find_first_not_of(' ');
-        if (first != string::npos)
-            line = line.substr(first, line.size() - first - 1);
-
-        if (!line.empty() && line.at(0) != '#')
+        if (Utils::containCode(line))
         {
-            vector <string> tokens;
-            tokens = Utils::split(line);
-            if (tokens.at(0).back() == ':')
-                computer->setLabel(tokens.at(0).substr(0,tokens.at(0).size() - 1),line_number);
-            line_number++;
+            //Trim initial spaces
+            size_t first = line.find_first_not_of(' ');
+            if (first != string::npos)
+                line = line.substr(first, line.size() - first - 1);
+    
+            if (!line.empty() && line.at(0) != '#')
+            {
+                vector <string> tokens;
+                tokens = Utils::split(line);
+                if (tokens.at(0).back() == ':')
+                    computer->setLabel(tokens.at(0).substr(0,tokens.at(0).size() - 1),line_number);
+                line_number++;
+            }
         }
     }
     in.close();
     in.open(filename.c_str(), ios::in);
     while(getline(in,line))
     {
-        //Trim initial spaces
-        size_t first = line.find_first_not_of(' ');
-        if (first != string::npos)
-            line = line.substr(first, line.size() - first);
-
-        //Remove comments
-        size_t comment = line.find_first_of('#');
-        if (comment != string::npos)
-            line = line.substr(0, comment);
-
-        if (!line.empty())
-            instructions.push_back(factory->CreateInstruction(c, line));
+        if (Utils::containCode(line))
+        {
+            //Trim initial spaces
+            size_t first = line.find_first_not_of(' ');
+            if (first != string::npos)
+                line = line.substr(first, line.size() - first);
+    
+            //Remove comments
+            size_t comment = line.find_first_of('#');
+            if (comment != string::npos)
+                line = line.substr(0, comment);
+    
+            if (!line.empty())
+                instructions.push_back(factory->CreateInstruction(c, line));
+    
+        }
     }
 }
 
