@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
     vector<pair<unsigned int, uint8_t>> memory;
     pair<unsigned int, unsigned int> range;
     header();
-    chrono::milliseconds timespan(1000); // or whatever
+    chrono::milliseconds timespan(500); // or whatever
     this_thread::sleep_for(timespan);
     if (argc != 2)
     {
@@ -154,6 +154,8 @@ int main(int argc, char *argv[])
             {
                 case 1:
                     c->run();
+                    this_thread::sleep_for(timespan);
+                    cout << "Finished with success." << endl;
                     break;
                 case 2: ;
                     cout << "Insert the range to view the values of registers (e.g. from 1 to 5 will show R1, R2, R3, R4, R5)" << endl;
