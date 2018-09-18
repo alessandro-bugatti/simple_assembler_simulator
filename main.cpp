@@ -172,13 +172,15 @@ int main(int argc, char *argv[])
             }
         }while (scelta != 0);
     }
-    catch(assembly_error &e)
-    {
-        cout << e.what() << endl;
-    }
     catch(exception &e)
     {
         cout << e.what() << endl;
+        cout << "The program will be terminated." << endl;
+        chrono::milliseconds timespan(1000);
+        for (int i = 0; i < 5; i++){
+            cout << ".";
+            this_thread::sleep_for(timespan);
+        }
     }
 
     return 0;
