@@ -145,32 +145,28 @@ int main(int argc, char *argv[])
         Computer *c = new Computer();
         c->loadProgram(filename);
         int scelta = 1;
-        bool passo = true;
         do
         {
             cout << endl;
-            if (passo)
+            menu();
+            cin >> scelta;
+            switch(scelta)
             {
-                menu();
-                cin >> scelta;
-                switch(scelta)
-                {
-                    case 1: //passo = false;
-                        c->run();
-                        break;
-                    case 2: ;
-                        cout << "Insert the range to view the values of registers (e.g. from 1 to 5 will show R1, R2, R3, R4, R5)" << endl;
-                        range = getRange();
-                        registers = c->getRegisters(range.first,range.second);
-                        registers_dump(registers);
-                        break;
-                    case 3: ;
-                        cout << "Insert the range to view the content of the memory, the values can be either hex or decimal number (e.g. from 256 (0x100) to 512 (0x200) will show the content of the memory from address 256 (0x100) to address 512 (0x200) included)" << endl;
-                        range = getRange();
-                        memory = c->getMemory(range.first,range.second);
-                        memory_dump(memory);
-                        break;
-                }
+                case 1:
+                    c->run();
+                    break;
+                case 2: ;
+                    cout << "Insert the range to view the values of registers (e.g. from 1 to 5 will show R1, R2, R3, R4, R5)" << endl;
+                    range = getRange();
+                    registers = c->getRegisters(range.first,range.second);
+                    registers_dump(registers);
+                    break;
+                case 3: ;
+                    cout << "Insert the range to view the content of the memory, the values can be either hex or decimal number (e.g. from 256 (0x100) to 512 (0x200) will show the content of the memory from address 256 (0x100) to address 512 (0x200) included)" << endl;
+                    range = getRange();
+                    memory = c->getMemory(range.first,range.second);
+                    memory_dump(memory);
+                    break;
             }
         }while (scelta != 0);
     }
