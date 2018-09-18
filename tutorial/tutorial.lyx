@@ -55,9 +55,9 @@ logicalmkup
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 1cm
+\leftmargin 2cm
 \topmargin 2cm
-\rightmargin 1cm
+\rightmargin 1.5cm
 \bottommargin 2cm
 \secnumdepth 3
 \tocdepth 3
@@ -680,7 +680,7 @@ Le istruzioni che permetteranno di farlo sono quindi le seguenti:
 \begin_inset listings
 lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
 inline false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -781,7 +781,7 @@ il terzo parametro è il secondo addendo dell'addizione e può essere direttamen
 \end_layout
 
 \begin_layout Subsubsection
-Esempi
+Esempio
 \end_layout
 
 \begin_layout Standard
@@ -818,7 +818,7 @@ Ignoriamo come siano stati inseriti i valori in R1, R2 e R4, che quindi
 \begin_inset listings
 lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
 inline false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -871,7 +871,7 @@ Questa istruzione copia i valori contenuti in un registro all'interno di
 La sintassi prevede due parametri, entrambi che rappresentano un registro
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 il primo parametro è il registro 
 \begin_inset Flex Strong
 status open
@@ -885,7 +885,7 @@ in
  cui verrà copiato il valore
 \end_layout
 
-\begin_layout Standard
+\begin_layout Itemize
 il secondo parametro è il registro 
 \begin_inset Flex Strong
 status open
@@ -897,6 +897,143 @@ da
 \end_inset
 
  cui verrà copiato il valore
+\end_layout
+
+\begin_layout Subsubsection
+Esempio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si copi il valore contenuto in R5 all'interno del registro R2
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+MOVE R2 R5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Come si vede questa istruzione è di immediata comprensione e di semplice
+ utilizzo e non fa altro che copiare il valore che si trova nel registro
+ R5 all'interno del registro R2.
+\end_layout
+
+\begin_layout Subsection
+LOAD
+\end_layout
+
+\begin_layout Standard
+Questa istruzione è una delle due fondamentali (l'altra è STORE) che permette
+ di far dialogare la CPU con la memoria attraverso i registri, in questo
+ caso prelevando un valore da una cella di memoria e copiandolo in un registro.
+\end_layout
+
+\begin_layout Standard
+La sintassi prevede due parametri, ambedue registri:
+\end_layout
+
+\begin_layout Itemize
+il primo è il registro nel quale verrà copiato il valore che si vuole recuperare
+ dalla memoria
+\end_layout
+
+\begin_layout Itemize
+il secondo è un registro che deve contenere l'indirizzo di memoria della
+ cella di memoria da cui si intende copiare il valore
+\end_layout
+
+\begin_layout Subsubsection
+Esempio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si copi il valore contenuto in memoria all'indirizzo 0x300 all'interno del
+ registro R1
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+LOADiL R2 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R2 0x03
+\end_layout
+
+\begin_layout Plain Layout
+
+LOAD R1 R2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le istruzioni alle righe 1 - 2 servono per caricare nel registro R2 (ma
+ se ne sarebbe potuto anche scegliere un altro) l'indirizzo di memoria che
+ ci interessa, in quanto la cella individuata da quell'indirizzo contiene
+ il dato da utilizzare.
+ A questo punto l'istruzione LOAD caricherà il valore contenuto nella memoria
+ alla locazione 0x300 all'interno del registro R1, in modo che possa essere
+ poi elaborato secondo le richieste del programma.
 \end_layout
 
 \begin_layout Section*
