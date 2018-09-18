@@ -8,11 +8,11 @@
 LoadiH::LoadiH(Computer *c, const string & line):Instruction(c,line)
 {
     if (parameters.size() != 2)
-        throw assembly_error("Wrong numbers of parameters in LOADhL " + parameters_str);
+        throw assembly_error("Wrong numbers of parameters in LOADiH " + parameters_str);
     if (!Utils::isRegisterValue(parameters.at(0)))
-        throw assembly_error("The first parameter in LOADhL doesn't seem a valid register: LOADiL " + parameters_str);
+        throw assembly_error("The first parameter in LOADiH doesn't seem a valid register: LOADiL " + parameters_str);
     if (!Utils::isAddressValue(parameters.at(1)))
-        throw assembly_error("The second parameter in LOADhL doesn't seem a valid address: LOADhL " + parameters_str);
+        throw assembly_error("The second parameter in LOADiH doesn't seem a valid address: LOADhL " + parameters_str);
 }
 
 
