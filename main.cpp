@@ -21,7 +21,7 @@
  *  \author Alessandro Bugatti
  *
  *  \date  Creation  2015-09-29
- *  \date  Last change 2015-09-29
+ *  \date  Last change 2018-09-15
  *
  */
 
@@ -53,7 +53,7 @@ void header()
     cout << "Assembly simulator" << endl;
     cout << "Version " << MAJOR << "." << MINOR << "." << BUILD << "." << REVISION
          << " Builds count:" << BUILDS_COUNT << endl;
-    cout << "Copyright 2015 - Alessandro Bugatti" << endl;
+    cout << "Copyright 2018 - Alessandro Bugatti" << endl;
 
 }
 
