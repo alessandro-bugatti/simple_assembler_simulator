@@ -172,11 +172,11 @@ int main(int argc, char *argv[])
             }
         }while (scelta != 0);
     }
-    catch(assembly_error e)
+    catch(assembly_error &e)
     {
         cout << e.what() << endl;
     }
-    catch(exception e)
+    catch(exception &e)
     {
         cout << e.what() << endl;
     }
