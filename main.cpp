@@ -179,8 +179,10 @@ int main(int argc, char *argv[])
         chrono::milliseconds timespan(1000);
         for (int i = 0; i < 5; i++){
             cout << ".";
+            cout.flush();
             this_thread::sleep_for(timespan);
         }
+        cout << endl;
     }
 
     return 0;
