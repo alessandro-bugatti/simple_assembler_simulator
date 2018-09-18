@@ -57,6 +57,7 @@
 		<Unit filename="include/loadil.h" />
 		<Unit filename="include/move.h" />
 		<Unit filename="include/mul.h" />
+		<Unit filename="include/print.h" />
 		<Unit filename="include/program.h" />
 		<Unit filename="include/store.h" />
 		<Unit filename="include/sub.h" />
@@ -81,6 +82,7 @@
 		<Unit filename="src/loadil.cpp" />
 		<Unit filename="src/move.cpp" />
 		<Unit filename="src/mul.cpp" />
+		<Unit filename="src/print.cpp" />
 		<Unit filename="src/program.cpp" />
 		<Unit filename="src/store.cpp" />
 		<Unit filename="src/sub.cpp" />
