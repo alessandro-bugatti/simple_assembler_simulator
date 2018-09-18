@@ -1,0 +1,927 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\begin_modules
+logicalmkup
+\end_modules
+\maintain_unincluded_children false
+\language italian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman palatino
+\font_sans helvet
+\font_typewriter courier
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1cm
+\topmargin 2cm
+\rightmargin 1cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Come usare il Simple Assembly Simulator
+\end_layout
+
+\begin_layout Author
+Alessandro Bugatti (alessandro.bugatti@unibs.it)
+\end_layout
+
+\begin_layout Abstract
+Questa breve dispensa ha lo scopo di spiegare l'utilizzo del software di
+ simulazione che può essere utilizzato per testare i programmi scritti in
+ Assembly durante il corso di 
+\begin_inset Quotes eld
+\end_inset
+
+Fondamenti di Informatica e Programmazione
+\begin_inset Quotes erd
+\end_inset
+
+ che si tiene all'Università degli Studi di Brescia, Facoltà di Ingegneria.
+\end_layout
+
+\begin_layout Section
+Perchè imparare l'assembly
+\end_layout
+
+\begin_layout Standard
+Storicamente l'assembly, o per meglio dire i linguaggi assembly, nascono
+ per permettere ai programmatori di scrivere del codice che non sia una
+ sequenza di istruzioni macchina, ma che associ delle etichette linguistiche
+ alle varie istruzioni, il che, insieme ad altre migliorie, consente agli
+ sviluppatori di scrivere programmi più complessi cone meno fatica.
+ 
+\end_layout
+
+\begin_layout Standard
+Essendo comunque un linguaggio di basso livello, in cui le istruzioni sono
+ quasi direttamente traducibili in istruzioni macchina, i programmi scritti
+ in assembly permettono un controllo completo su cosa accade all'interno
+ della macchina.
+ Come si può vedere in figura 1, dove è mostrato un esempio di codice reale,
+ le istruzioni in linguaggio macchina sono di difficile interpretazione,
+ mentre le istruzioni in assembly, pur rimanendo di non semplice interpretazione
+, offrono sicuramente un'astrazione maggiore, permettendo ad esempio di
+ capire più velocemente che il codice in figura somma il numero 2 con il
+ numero 3.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename assembly.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Esempio di un assembly reale
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I linguaggi di tipo assembly sono strettamente legati all'architettura della
+ macchina per cui devono essere scritti i programmi e questo ha portato
+ alla proliferazione di linguaggi concettualmente simili, ma tra loro incompatib
+ili.
+\end_layout
+
+\begin_layout Standard
+Per evitare di appesantire inutilmente l'apprendimento usando un linguaggio
+ assembly reale, ad esempio quello di Intel per la piattaforma x86, si è
+ preferito utilizzare un linguaggio inventato, del tutto verosimile e con
+ un insieme di istruzioni minimale ma sufficiente a comprendere il funzionamento
+ 
+\begin_inset Quotes eld
+\end_inset
+
+interno
+\begin_inset Quotes erd
+\end_inset
+
+ di un computer, che poi è lo scopo dello studio di questo argomento.
+ 
+\end_layout
+
+\begin_layout Standard
+Va infine detto che nella pratica reale il linguaggi assembly sono rimasti
+ appannaggio di alcune nicchie di programmazione (sistemi operativi, driver
+ di periferica, compilatori, ...), ma anche in quei casi l'utilizzo rimane
+ molto limitato in parte a causa della velocità dei computer moderni, che
+ rendono meno rilevante la ricerca di prestazioni spinte utilizzando del
+ codice assembly ottimizzato, dall'altro esistono linguaggi di più alto
+ livello (C, C++, Go, ...) che producono del codice macchina estremamente efficient
+e senza costringere il programmatore a scrivere in assembly.
+\end_layout
+
+\begin_layout Section
+L'Assembly visto a lezione
+\end_layout
+
+\begin_layout Standard
+Per comprendere le istruzioni che verranno adesso spiegate, può essere utile
+ ripassare alcuni concetti fondamentali visti a lezione:
+\end_layout
+
+\begin_layout Itemize
+i 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+registri
+\end_layout
+
+\end_inset
+
+ possono essere visti come delle memorie molto piccole, ma veloci, ognuno
+ dei quali è contraddistinto da un 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+nome
+\end_layout
+
+\end_inset
+
+ e può memorizzare al suo interno un 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+valore
+\end_layout
+
+\end_inset
+
+.
+ A parte il nome diverso, ogni registro è funzionalmente equivalente a qualunque
+ altro, a differenza delle architetture reali dove spesso registri diversi
+ fanno cose diverse.
+ 
+\end_layout
+
+\begin_layout Itemize
+tutte le operazioni (somme, differenze, confronti, ...) avvengono tra valori
+ contenuti nei registri, 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+non
+\end_layout
+
+\end_inset
+
+ possono essere fatte direttamente nella memoria
+\end_layout
+
+\begin_layout Itemize
+la 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+memoria
+\end_layout
+
+\end_inset
+
+ è un insieme di 
+\begin_inset Quotes eld
+\end_inset
+
+caselle
+\begin_inset Quotes erd
+\end_inset
+
+ consecutive, ognuna contraddistinta da un 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+indirizzo
+\end_layout
+
+\end_inset
+
+, che servono a contenere i dati su cui deve operare il programma (il fatto
+ che contenga anche le istruzioni è del tutto irrilevante per chi scrive
+ il programma)
+\end_layout
+
+\begin_layout Itemize
+da quanto detto sopra un programma, in generale, prenderà dei dati dalla
+ memoria per metterli in uno o più registri (operazione detta di 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+LOAD
+\end_layout
+
+\end_inset
+
+), li elaborerà in modo opportuno e poi sposterà i risultati dai registri
+ alla memoria (operazione detta di 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+STORE
+\end_layout
+
+\end_inset
+
+), ripetendo eventualmente queste operazioni tante volte quante servono.
+\end_layout
+
+\begin_layout Standard
+Verranno adesso spiegate le istruzioni assembly racchiuse nella tabella
+ 1 
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{table}[htbp]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tabular}{| l | l | l |} 
+\backslash
+hline Istruzione & Significato & Indirizzamenti 
+\backslash
+
+\backslash
+ 
+\backslash
+hline LOADiL RX Val & RX$_{1-8}$ $
+\backslash
+leftarrow$ Val & Registro/Immediato con codifica esadecimale
+\backslash
+
+\backslash
+ LOADiH RX Val & RX$_{9-16}$ $
+\backslash
+leftarrow$ Val & Registro/Immediato con codifica esadecimale
+\backslash
+
+\backslash
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD RX RY Val & RX $
+\backslash
+leftarrow$ RY $+$ Val & Registro/Registro/Immediato con codifica esadecimale
+\backslash
+
+\backslash
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD RX RY RZ & RX $
+\backslash
+leftarrow$ RY $+$ RZ & Registro/Registro/Registro
+\backslash
+
+\backslash
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+SUB RX RY Val & RX $
+\backslash
+leftarrow$ RY $-$ Val & Registro/Registro/Immediato con codifica esadecimale
+\backslash
+
+\backslash
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+SUB RX RY RZ & RX $
+\backslash
+leftarrow$ RY $-$ RZ & Registro/Registro/Registro 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+MUL RX RY Val & RX $
+\backslash
+leftarrow$ RY $
+\backslash
+times$ Val & Registro/Registro/Immediato con codifica esadecimale
+\backslash
+
+\backslash
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+MUL RX RY RZ & RX $
+\backslash
+leftarrow$ RY $
+\backslash
+times$ RZ & Registro/Registro/Registro 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+DIV RX RY Val & RX $
+\backslash
+leftarrow$ RY $/$ Val & Registro/Registro/Immediato con codifica esadecimale
+\backslash
+
+\backslash
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+DIV RX RY RZ & RX $
+\backslash
+leftarrow$ RY $/$ RZ & Registro/Registro/Registro 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+MOVE RX RY & RX$
+\backslash
+leftarrow$ RY & Registro/Registro 
+\backslash
+
+\backslash
+ LOAD RX RY& RX$
+\backslash
+leftarrow$ M[RY] & Registro/Memoria indiretto rispetto a registro
+\backslash
+
+\backslash
+ STORE RX RY& M[RX]$
+\backslash
+leftarrow$ RY & Memoria indiretto rispetto a registro/Registro
+\backslash
+
+\backslash
+ BLT RX RY label & PC $
+\backslash
+leftarrow$ label se RX $<$ RY & Registro/Registro/Etichetta
+\backslash
+
+\backslash
+ BLE RX RY label & PC $
+\backslash
+leftarrow$ label se RX $
+\backslash
+le$ RY & Registro/Registro/Etichetta
+\backslash
+
+\backslash
+ BGT RX RY label & PC $
+\backslash
+leftarrow$ label se RX $>$ RY & Registro/Registro/Etichetta
+\backslash
+
+\backslash
+ BGE RX RY label & PC $
+\backslash
+leftarrow$ label se RX $
+\backslash
+ge$ RY & Registro/Registro/Etichetta
+\backslash
+
+\backslash
+ BEQ RX RY label & PC $
+\backslash
+leftarrow$ label se RX $=$ RY & Registro/Registro/Etichetta
+\backslash
+
+\backslash
+ BNE RX RY label & PC $
+\backslash
+leftarrow$ label se RX $
+\backslash
+neq$ RY & Registro/Registro/Etichetta
+\backslash
+
+\backslash
+ B label & PC $
+\backslash
+leftarrow$ label & 
+\backslash
+
+\backslash
+ END & & 
+\backslash
+
+\backslash
+ 
+\backslash
+hline 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tabular} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+caption{
+\backslash
+label{tab:assembly}Istruzione assembly}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{table}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+LOADiL e LOADiH
+\end_layout
+
+\begin_layout Standard
+Tutti i programmi che si vedranno hanno la necessità di caricare inizialmente
+ nei registri dei valori che fanno parte dei dati del problemi da risolvere.
+ Solitamente questi dati possono essere o dei numeri o degli indirizzi di
+ memoria, per l'istruzione questo non fa differenza, ovviamente farà differenza
+ il modo in cui saranno usati.
+ Per rendere l'architettura più realisticaa si è supposto che i registri
+ abbiano una dimensione di 2 byte e che per caricarli sia necessario caricare
+ il byte 
+\begin_inset Quotes eld
+\end_inset
+
+basso
+\begin_inset Quotes erd
+\end_inset
+
+ (con LOADiL, gli 8 bit meno significativi, dall'1 all'8) e il byte 
+\begin_inset Quotes eld
+\end_inset
+
+alto
+\begin_inset Quotes erd
+\end_inset
+
+ (LOADiH, gli 8 bit più significativi, dal 9 al 16).
+ 
+\end_layout
+
+\begin_layout Standard
+La sintassi prevede due parametri dopo il nome dell'istruzione:
+\end_layout
+
+\begin_layout Itemize
+il primo è un nome di registro, quindi 
+\begin_inset Formula $R_{n}$
+\end_inset
+
+con 
+\begin_inset Formula $1\leq n\leq16$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+il secondo è un valore esadecimale, quindi con il prefisso 0x, che può rappresen
+tare un valore o un indirizzo
+\end_layout
+
+\begin_layout Subsubsection*
+Esempio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si prenda il valore memorizzato all'indirizzo di memoria 0x480, gli si sommi
+ 7 e il risultato lo si memorizzi nella cella di memoria all'indirizzo 0x500
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Nel testo di questo problema sono presenti 3 dati:
+\end_layout
+
+\begin_layout Itemize
+l'indirizzo della cella di memoria dove si trova il numero a cui sommare
+ 7
+\end_layout
+
+\begin_layout Itemize
+il numero 7 stesso
+\end_layout
+
+\begin_layout Itemize
+l'indirizzo della cella di memoria dove memorizzare il risultato
+\end_layout
+
+\begin_layout Standard
+Le istruzioni che permetteranno di farlo sono quindi le seguenti:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+inline false
+status collapsed
+
+\begin_layout Plain Layout
+
+LOADiL R1 0x80
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R1 0x04
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R2 0x07
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R2 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R3 0x05
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nelle righe 1 - 2 viene caricato il valore 0x480, che rappresenta un indirizzo
+ di memoria, nel registro R1: come si può vedere viene caricata la parte
+ bassa con il primo byte, cioè 0x80 (si ricorda che una cifra esadecimale
+ occupa 4 bit e quindi due cifre esadecimali sono esattamente 1 byte) e
+ poi la parte alta, cioè 0x04.
+ L'ordine con il quale vengono eseguite queste due istruzioni è indifferente.
+\end_layout
+
+\begin_layout Standard
+Nelle righe 3 - 4 viene inserito il numero 7 nel registro R2, sempre con
+ lo stesso meccanismo.
+ Si ponga attenzione al fatto che per l'istruzione è indifferente che il
+ numero caricato rappresenti un valore (come il 7) o un indirizzo (come
+ 0x480), sarà poi l'uso che se ne farà che sarà diverso.
+ Comunque sia i valori che gli indirizzi devono essere dei numeri esadecimali
+ (quindi con il prefisso 0x) per poter essere caricati dal simulatore: nei
+ testi dei problemi, mentre per gli indirizzi si usano sempre dei valori
+ esadecimali, per i valori come il 7 a volte si usa la notazione decimale
+ (come in questo esempio).
+ Al momento della scrittura del programma il numero va comunque convertito
+ in esadecimale per poter essere caricato (nel caso del 7 è ovviamente equivalen
+te a 0x7).
+\end_layout
+
+\begin_layout Standard
+Infine nelle righe 5 - 6 si carica l'indirizzo 0x500 nel registro R3.
+\end_layout
+
+\begin_layout Subsection
+ADD
+\end_layout
+
+\begin_layout Standard
+L'istruzione ADD è un'istruzione di tipo matematico che, come ovvio, somma
+ tra loro due numeri e che è implementata in hardware all'interno della
+ ALU.
+ Qua si parlerà solo di questa istruzione, il funzionamento delle altre
+ funzioni matematiche (SUB, MUL, DIV) è assolutamente lo stesso, a parte
+ l'operazione svolta.
+ Tutte le operazioni matematiche lavorano solo su numeri interi e quindi
+ anche i risultati saranno sempre interi.
+\end_layout
+
+\begin_layout Standard
+La sintassi prevede due forme possibile, entrambe con 3 parametri, con i
+ primi due aventi lo stesso significato:
+\end_layout
+
+\begin_layout Itemize
+il primo parametro è il nome del registro dove verrà memorizzato il risultato
+ dell'operazione
+\end_layout
+
+\begin_layout Itemize
+il secondo parametro è il primo addendo dell'addizione
+\end_layout
+
+\begin_layout Itemize
+il terzo parametro è il secondo addendo dell'addizione e può essere direttamente
+ un numero oppure il numero contenuto all'interno di un registro.
+\end_layout
+
+\begin_layout Subsubsection
+Esempi
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si sommino i valori contenuti all'interno dei registri R1 e R2 e si memorizzi
+ il risultato nel registro R3, successivamente gli si aggiunga il valore
+ contenuto nel registro R4 e infine lo si incrementi di 1
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Ignoriamo come siano stati inseriti i valori in R1, R2 e R4, che quindi
+ assumiamo contengano già dei valori, allora il programma sarà il seguente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+ADD R3 R1 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD R3 R3 R4
+\end_layout
+
+\begin_layout Plain Layout
+
+ADD R3 R3 0x01
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Alla prima riga vengono presi i valori contenuti in R1 e R2, vengono sommati
+ e successivamente memorizzati in R3, nella seconda riga viene sommato il
+ valore contenuto in R4 a quello già presente in R3: si noti infatti che
+ R3 compare sia in prima che in seconda posizione, il che significa che
+ prima verrà sommato il valore contenuto in R3 con quello in R4 e successivament
+e il risultato verrà memorizzato in R3, sovrascrivendo il valore precedente.
+ Infine nella terza riga, utilizzando stavolta un valore come terzo parametro,
+ viene aggiunto 1 al valore contenuto in R3.
+ 
+\end_layout
+
+\begin_layout Standard
+Se i valori iniziali contenuti in R1, R2 e R4 fossero stati rispettivamente
+ 12, 4 e 9, dopo aver eseguito le istruzioni precedenti in R3 sarebbe stato
+ memorizzato il valore 26.
+\end_layout
+
+\begin_layout Subsection
+MOVE
+\end_layout
+
+\begin_layout Standard
+Questa istruzione copia i valori contenuti in un registro all'interno di
+ un altro registro.
+\end_layout
+
+\begin_layout Standard
+La sintassi prevede due parametri, entrambi che rappresentano un registro
+\end_layout
+
+\begin_layout Standard
+il primo parametro è il registro 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+in
+\end_layout
+
+\end_inset
+
+ cui verrà copiato il valore
+\end_layout
+
+\begin_layout Standard
+il secondo parametro è il registro 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+da
+\end_layout
+
+\end_inset
+
+ cui verrà copiato il valore
+\end_layout
+
+\begin_layout Section*
+Come recuperare e installare il programma
+\end_layout
+
+\begin_layout Section*
+Come utilizzare il programma
+\end_layout
+
+\begin_layout Section*
+Esempi di utilizzo
+\end_layout
+
+\begin_layout Section*
+La sequenza
+\end_layout
+
+\begin_layout Section*
+La selezione
+\end_layout
+
+\begin_layout Section*
+L'iterazione
+\end_layout
+
+\end_body
+\end_document
