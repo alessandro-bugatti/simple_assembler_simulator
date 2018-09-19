@@ -61,7 +61,7 @@ void registers_dump(vector<pair <string, unsigned int>> registers)
 {
     const int width = 14;
     const int width_s = width - 2;
-    cout << std::setw(width) << "Register |"
+    cout << std::right << std::setw(width) << "Register |"
     << std::setw(width) << "Value(hex) |"
     << std::setw(width) << "Value(dec) |" << endl;
     for (int i = 0; i < width*3; i++)
@@ -77,7 +77,7 @@ void memory_dump(vector<pair <unsigned int, unsigned char>> memory)
 {
     const int width = 14;
     const int width_s = width - 2;
-    cout << std::setw(width) << "Addr(hex) |"
+    cout << std::right << std::setw(width) << "Addr(hex) |"
     << std::setw(width) << "Addr(dec) |"
     << std::setw(width) << "Value(hex) |"
     << std::setw(width) << "Value(dec) |" << endl;
