@@ -810,6 +810,9 @@ si sommino i valori contenuti all'interno dei registri R1 e R2 e si memorizzi
 \end_layout
 
 \begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
 Ignoriamo come siano stati inseriti i valori in R1, R2 e R4, che quindi
  assumiamo contengano già dei valori, allora il programma sarà il seguente:
 \end_layout
@@ -1036,12 +1039,517 @@ Le istruzioni alle righe 1 - 2 servono per caricare nel registro R2 (ma
  poi elaborato secondo le richieste del programma.
 \end_layout
 
-\begin_layout Section*
-Come recuperare e installare il programma
+\begin_layout Subsection
+STORE
+\end_layout
+
+\begin_layout Standard
+L'istruzione complementare di LOAD è STORE e serve a trasferire un valore
+ che si trova all'interno di un registro verso una cella di memoria individuata
+ dal suo indirizzo.
+ 
+\end_layout
+
+\begin_layout Standard
+La sintassi prevede due parametri, ambedue registri:
+\end_layout
+
+\begin_layout Itemize
+il primo è il registro che contiene l'indirizzo di memoria in cui si vuole
+ copiare il dato che interessa
+\end_layout
+
+\begin_layout Itemize
+il secondo è il registro che contiene il dato che si desidera copiare in
+ memoria
+\end_layout
+
+\begin_layout Subsubsection
+Esempio
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si copi il valore contenuto nel registro R1 all'indirizzo di memoria 0x300
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+LOADiL R2 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R2 0x03
+\end_layout
+
+\begin_layout Plain Layout
+
+STORE R2 R1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le istruzioni alle righe 1 - 2 servono per caricare nel registro R2 (ma
+ se ne sarebbe potuto anche scegliere un altro) l'indirizzo di memoria che
+ ci interessa, che quindi individuerà la cella di memoria dove si desidera
+ memorizzare il dato.
+ Alla riga 3 l'istruzione STORE prenderà il dato presente nel registro R1
+ e lo copierà quindi nella cella 0x300.
+\end_layout
+
+\begin_layout Section
+Un esempio completo
+\end_layout
+
+\begin_layout Standard
+Prima di spiegare il funzionamento delle istruzioni di salto (branch), verrà
+ analizzata la soluzione di un problema semplice ma completo e successivamente
+ si vedrà come eseguire questo programma sul simulatore.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si calcoli l'area di un rettangolo, considerando che il valore della base
+ si trova all'indirizzo 0x100, quello dell'altezza all'indirizzo 0x200 e
+ si vuole che il risultato venga scritto in memoria all'indirizzo 0x300
+\end_layout
+
+\end_inset
+
+.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Come si può vedere questo problema richiede di applicare tutte le istruzioni
+ viste in precedenza per arrivare alla soluzione, che può essere scritta
+ così:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+LOADiL R1 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R1 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R2 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R2 0x02
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R3 0x03
+\end_layout
+
+\begin_layout Plain Layout
+
+LOAD R4 R1
+\end_layout
+
+\begin_layout Plain Layout
+
+LOAD R5 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+MUL R6 R4 R5
+\end_layout
+
+\begin_layout Plain Layout
+
+STORE R3 R6
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le prime 6 righe permettono di caricare in alcuni registri gli indirizzi
+ delle aree di memoria che il problema richiede di leggere o scrivere: infatti
+ in R1 viene memorizzato l'indirizzo dove si trova il valore della base,
+ in R2 quello dell'altezza e in R3 l'indirizzo della cella di memoria dove
+ dovrà essere posto il risultato una volta eseguita la computazione.
+\end_layout
+
+\begin_layout Standard
+Le righe 7-8 permettono di caricare i valori della base e dell'altezza rispettiv
+amente nel registro R4 e nel registro R5, in modo che poi si possa eseguire
+ la moltiplicazione su quei valori, che viene fatta nella riga successiva.
+ Come si nota il risultato viene scritto in R6 e l'ultima riga provvede
+ poi a copiarlo in memoria all'indirizzo contenuto in R3, cioè 0x300.
+\end_layout
+
+\begin_layout Standard
+Recapitolando sono stati usati i seguenti registri con questo scopo:
+\end_layout
+
+\begin_layout Itemize
+R1: contiene l'indirizzo della cella di memoria dove si trova il valore
+ della base
+\end_layout
+
+\begin_layout Itemize
+R2: contiene l'indirizzo della cella di memoria dove si trova il valore
+ dell'altezza
+\end_layout
+
+\begin_layout Itemize
+R3: contiene l'indirizzo della cella di memoria dove verrà copiato il risultato,
+ cioè l'area
+\end_layout
+
+\begin_layout Itemize
+R4: contiene il valore della base
+\end_layout
+
+\begin_layout Itemize
+R5: contiene il valore dell'altezza
+\end_layout
+
+\begin_layout Itemize
+R6: contiene il valore dell'area
+\end_layout
+
+\begin_layout Standard
+Vale la pena notare due cose:
+\end_layout
+
+\begin_layout Itemize
+si sarebbe potuta fare 
+\begin_inset Quotes eld
+\end_inset
+
+economia
+\begin_inset Quotes erd
+\end_inset
+
+ nell'utilizzo dei registri, ad esempio memorizzando l'area in R1, poichè
+ dopo il suo utilizzo alla riga 7 il dato contenuto (0x100) poteva tranquillamen
+te essere sovrascritto.
+ Per questo corso si sconsiglia comunque di utilizzare lo stesso registro
+ per scopi diversi in momenti diversi, in modo da privilegiare la chiarezza,
+ indicando sempre lo scopo di ogni registro
+\end_layout
+
+\begin_layout Itemize
+come già detto in precedenza, i registri possono contenere sia valori che
+ indirizzi, poichè entrambi sono numeri, la differenza sarà soltanto nell'utiliz
+zo che poi ne farà il programma.
+\end_layout
+
+\begin_layout Section
+Come recuperare e installare il simulatore
+\end_layout
+
+\begin_layout Standard
+Per poter provare a correttezza di quanto scritto, è necessario avere sul
+ proprio computer il simulatore scritto per questo corso.
+ Il sito dove si possono trovare sia il software che le istruzioni per installar
+lo e utilizzarlo si trova all'indirizzo 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://github.com/alessandro-bugatti/simple_assembler_simulator"
+target "https://github.com/alessandro-bugatti/simple_assembler_simulator"
+
+\end_inset
+
+ e chi fosse già in grado di utilizzare 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+git
+\end_layout
+
+\end_inset
+
+ e gli strumenti di compilazione del linguaggio C++ è invitato a seguire
+ le istruzioni, in modo da avere la versione sempre aggiornata e seguirne
+ un eventuale sviluppo futuro.
+ Per tutti gli altri
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Temo la stragrande maggioranza...
+\end_layout
+
+\end_inset
+
+, verrà indicata una procedura molto più semplice, che dovrebbe essere alla
+ portata di chiunque abbia un computer
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+D'altronde state facendo Ingegneria, ci si aspetta che siate piuttosto tosti...
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Andando in una sottosezione del sito precedente, in particolare quella indicata
+ nel tab Release, il cui link diretto è 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://github.com/alessandro-bugatti/simple_assembler_simulator/releases"
+target "https://github.com/alessandro-bugatti/simple_assembler_simulator/releases"
+
+\end_inset
+
+ è possibile trovare un archivio zip che contiene, sia per Windows che per
+ Linux, il programma vero e proprio, una serie di esempi e questo tutorial.
+\end_layout
+
+\begin_layout Standard
+Dopo aver scaricato l'archivio opportuno, si proceda con l'estrazione ottenendo
+ una cartella che contiene quanto detto sopra.
+ Facendo doppio click sull'unico eseguibile presente (
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+simple_assembler_simulator.exe
+\end_layout
+
+\end_inset
+
+, l'estensione nei sistemi Windows potrebbe anche non essere visibile),
+ si aprirà una finestra a caratteri che costituisce il simulatore.
+ Attenzione: alcuni sistemi Windows e/o alcuni antivirus potrebbero lamentarsi
+ del fatto che stiate per mandare in esecuzione un programma scaricato da
+ Internet, di fonte ignota.
+ Se vi fidate di me ignorate gli avvisi, altrimenti leggetevi i sorgenti
+ del programma e compilatevelo sul vostro sistema
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Una soluzione ancora più drastica è quella di non scaricarlo affatto, ma
+ la sconsiglio vivamente
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section*
 Come utilizzare il programma
+\end_layout
+
+\begin_layout Standard
+Se dopo aver fatto doppio click si aprirà la finestra a caratteri, dovrebbe
+ anche comparire una scritta come questa:
+\end_layout
+
+\begin_layout Quote
+\begin_inset listings
+lstparams "language=bash,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Quote
+
+Assembly simulator
+\end_layout
+
+\begin_layout Quote
+
+Version 1.1.0.0 Builds count:175
+\end_layout
+
+\begin_layout Quote
+
+Copyright 2018 - Alessandro Bugatti
+\end_layout
+
+\begin_layout Quote
+
+Load file:
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+con il cursore lampeggiante in attesa che voi inseriate il nome di un file
+ contenente un programma scritto con il linguaggio assembly appena visto.
+ Per verificare che tutto funzioni si può scrivere il nome 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+test.asm
+\end_layout
+
+\end_inset
+
+ (che è un file già compreso nell'archivio scaricato) e dovrebbe apparire
+ questo menù:
+\end_layout
+
+\begin_layout Quote
+\begin_inset listings
+lstparams "language=bash,basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Quote
+
+1) Run
+\end_layout
+
+\begin_layout Quote
+
+2) Show registers
+\end_layout
+
+\begin_layout Quote
+
+3) Show memory
+\end_layout
+
+\begin_layout Quote
+
+0) Exit
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Quote
+In questo modo il programma viene caricato nel simulatore ed è pronto per
+ essere eseguito.
+ Le voci di menù permettono di fare le seguenti cose:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Run
+\end_layout
+
+\end_inset
+
+: manda in esecuzione il programma, eseguendolo riga per riga.
+ Il programma può essere uno degli esempi presenti nell'archivio compresso
+ oppure essere scritto ex-novo.
+ Se nel programma fossero presenti degli errori sintattici il programma
+ mostrerà un messaggio in cui viene spiegato l'errore e, dopo 5 secondi,
+ si chiuderà automaticamente.
+ Se invece il programma viene eseguito fino alla fine, mostrando eventualmente
+ dell'output a video, oppure niente, se non ci sono istruzioni di output:
+ in ogni caso alla fine dell'esecuzione verrà mostrato un messaggio che
+ indica che tutto è andato a buon fine e verrà mostrato nuovamente il menù.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Show registers
+\end_layout
+
+\end_inset
+
+: 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Show memory
+\end_layout
+
+\end_inset
+
+:
 \end_layout
 
 \begin_layout Section*
