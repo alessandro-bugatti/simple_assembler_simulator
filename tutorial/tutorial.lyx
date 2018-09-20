@@ -320,6 +320,11 @@ STORE
 ), ripetendo eventualmente queste operazioni tante volte quante servono.
 \end_layout
 
+\begin_layout Itemize
+l'architettura di questo calcolatore è a 16 bit, cioè ogni dato numerico
+ occupa due byte, quindi due caselle di memoria adiacenti.
+\end_layout
+
 \begin_layout Standard
 Verranno adesso spiegate le istruzioni assembly racchiuse nella tabella
  1 
@@ -678,7 +683,7 @@ Le istruzioni che permetteranno di farlo sono quindi le seguenti:
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
 inline false
 status open
 
@@ -819,7 +824,7 @@ Ignoriamo come siano stati inseriti i valori in R1, R2 e R4, che quindi
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
 inline false
 status collapsed
 
@@ -931,7 +936,7 @@ si copi il valore contenuto in R5 all'interno del registro R2
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
 inline false
 status open
 
@@ -1005,7 +1010,7 @@ si copi il valore contenuto in memoria all'indirizzo 0x300 all'interno del
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
 inline false
 status open
 
@@ -1093,7 +1098,7 @@ si copi il valore contenuto nel registro R1 all'indirizzo di memoria 0x300
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
 inline false
 status open
 
@@ -1127,6 +1132,12 @@ Le istruzioni alle righe 1 - 2 servono per caricare nel registro R2 (ma
 \end_layout
 
 \begin_layout Section
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Un-esempio-completo"
+
+\end_inset
+
 Un esempio completo
 \end_layout
 
@@ -1177,7 +1188,7 @@ Come si può vedere questo problema richiede di applicare tutte le istruzioni
 
 \begin_layout Standard
 \begin_inset listings
-lstparams "language={[x86masm]Assembler},numbers=left,frame=TB"
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
 inline false
 status open
 
@@ -1410,7 +1421,7 @@ Una soluzione ancora più drastica è quella di non scaricarlo affatto, ma
 .
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Come utilizzare il programma
 \end_layout
 
@@ -1536,7 +1547,72 @@ Show registers
 
 \end_inset
 
-: 
+: mostra il contenuto dei registri, sia in formato decimale che esadecimale.
+ Viene richiesto un intervallo e vengono mostrati i valori all'interno di
+ quell'intervallo di registri.
+ Se ad esempio interessano i registri da R1 a R4, dopo aver inserito gli
+ estremi dell'intervallo, apparirà un output simile al seguente:
+\end_layout
+
+\begin_layout Quote
+\begin_inset listings
+lstparams "language=bash,basicstyle={\ttfamily},breaklines=true"
+inline false
+status collapsed
+
+\begin_layout Quote
+
+Insert the range to view the values of registers (e.g.
+ from 1 to 5 will show R1, R2, R3, R4, R5)
+\end_layout
+
+\begin_layout Quote
+
+From: 1
+\end_layout
+
+\begin_layout Quote
+
+To: 4
+\end_layout
+
+\begin_layout Quote
+
+    Register |  Value(hex) |  Value(dec) |
+\end_layout
+
+\begin_layout Quote
+
+------------------------------------------
+\end_layout
+
+\begin_layout Quote
+
+          R1 |       0x3e8 |        1000 |
+\end_layout
+
+\begin_layout Quote
+
+          R2 |       0x3e6 |         998 |
+\end_layout
+
+\begin_layout Quote
+
+          R3 |       0x76c |        1900 |
+\end_layout
+
+\begin_layout Quote
+
+          R4 |       0x1c2 |         450 |
+\end_layout
+
+\begin_layout Quote
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Enumerate
@@ -1549,15 +1625,606 @@ Show memory
 
 \end_inset
 
-:
+: la stessa cosa dell'opzione precedente, solo per la memoria.
+ In questo caso viene richiesto un intervallo di celle di memoria, che può
+ essere espresso in forma decimale o esadecimale, il cui risultato sarà
+ simile al seguente:
 \end_layout
 
-\begin_layout Section*
-Esempi di utilizzo
+\begin_layout Quote
+\begin_inset listings
+lstparams "language=bash,basicstyle={\ttfamily},breaklines=true"
+inline false
+status open
+
+\begin_layout Quote
+
+Insert the range to view the content of the memory, the values can be either
+ hex or decimal number (e.g.
+ from 256 (0x100) to 512 (0x200) will show the content of the memory from
+ address 256 (0x100) to address 512 (0x200) included)
 \end_layout
 
-\begin_layout Section*
-La sequenza
+\begin_layout Quote
+
+From: 0x100
+\end_layout
+
+\begin_layout Quote
+
+To: 0x104
+\end_layout
+
+\begin_layout Quote
+
+   Addr(hex) |   Addr(dec) |  Value(hex) |  Value(dec) |
+\end_layout
+
+\begin_layout Quote
+
+--------------------------------------------------------
+\end_layout
+
+\begin_layout Quote
+
+       0x100 |         256 |        0x4f |          79 |
+\end_layout
+
+\begin_layout Quote
+
+       0x101 |         257 |           0 |           0 |
+\end_layout
+
+\begin_layout Quote
+
+       0x102 |         258 |        0x50 |          80 |
+\end_layout
+
+\begin_layout Quote
+
+       0x103 |         259 |           0 |           0 |
+\end_layout
+
+\begin_layout Quote
+
+       0x104 |         260 |        0x51 |          81 |
+\end_layout
+
+\begin_layout Quote
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Come si può vedere ogni cella di memoria contiene al suo interno un singolo
+ byte: poichè i registri sono a 16 bit nelle operazioni di LOAD e STORE
+ verrà comunque spostato il contenuto di due celle di memoria adiacenti.
+\end_layout
+
+\begin_layout Standard
+Lo scopo delle istruzioni che mostrano memoria e registri è quello di verificare
+, una volta fatto il 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+run
+\end_layout
+
+\end_inset
+
+ del programma, che i dati siano quelli che ci si aspetta, non avendo questo
+ programma un'interfaccia grafica che possa essere aggiornata durante l'esecuzio
+ne del codice assembly.
+\end_layout
+
+\begin_layout Standard
+In generale la sequenza di operazioni da svolgere quando si desidera provare
+ a scrivere e testare un programma scritto in assembly sarà la seguente:
+\end_layout
+
+\begin_layout Enumerate
+si crei un nuovo file con un editor di testo, il blocco note nella sua ultima
+ versione può andare bene, oppure Scite, Geany o cose del genere
+\end_layout
+
+\begin_layout Enumerate
+si scriva all'interno del file il codice assembly che risolve il problema
+ richiesto (come ad esempio quello del calcolo dell'area del rettangolo)
+\end_layout
+
+\begin_layout Enumerate
+si salvi il file all'interno della cartella ottenuta scompattando l'archivio
+ che contiene l'assemblatore, dandogli l'estensione 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+.asm
+\end_layout
+
+\end_inset
+
+, non è realmente necessario ma permette di vedere al volo che si tratta
+ di un file scritto in assembly.
+\end_layout
+
+\begin_layout Enumerate
+si apra il 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+simple_assembler_simulator
+\end_layout
+
+\end_inset
+
+ con il doppio click e alla richiesta 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+Load file
+\end_layout
+
+\end_inset
+
+: si inserisca il nome del file appena salvato e si prema Invio
+\end_layout
+
+\begin_layout Enumerate
+se viene mostrato il menù si mandi in esecuzione il programma premendo il
+ tasto 1 e successivamente Invio
+\end_layout
+
+\begin_layout Enumerate
+se il programma non contiene errori l'esecuzione terminerà correttamente,
+ altrimenti il programma segnalerà un errore e la finestra verrà chiusa.
+ In tal caso sarà necessario rileggere il codice assembly e cercare dove
+ si trova l'errore, per correggerlo e ripetere la procedura dal punto 4.
+\end_layout
+
+\begin_layout Enumerate
+per verificare che il programma, oltre a essere corretto sintatticamente,
+ esegua anche il compito per cui era stato scritto, si visualizzino registri
+ e memoria di interesse e si verifichi che contengano i valori corretti.
+\end_layout
+
+\begin_layout Standard
+Riprendiamo l'esempio del paragrafo 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Un-esempio-completo"
+
+\end_inset
+
+, con qualche modifica per rendere più semplice la visualizzazione dei risultati.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si calcoli l'area di un rettangolo, considerando che il valore della base
+ si trova all'indirizzo 0x100, quello dell'altezza all'indirizzo 0x102 e
+ si vuole che il risultato venga scritto in memoria all'indirizzo 0x104
+\end_layout
+
+\end_inset
+
+.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+# Input: the width and the height of a rectangle
+\end_layout
+
+\begin_layout Plain Layout
+
+# Output: the area
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Preload
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R1 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R1 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R2 0x07
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R2 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+STORE R1 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R1 0x02
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R1 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R2 0x04
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R2 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+STORE R1 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# The solution
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R1 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R1 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R2 0x02
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R2 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiL R3 0x04
+\end_layout
+
+\begin_layout Plain Layout
+
+LOADiH R3 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+LOAD R4 R1
+\end_layout
+
+\begin_layout Plain Layout
+
+LOAD R5 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+MUL R6 R4 R5
+\end_layout
+
+\begin_layout Plain Layout
+
+STORE R3 R6
+\end_layout
+
+\begin_layout Plain Layout
+
+END
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Questa soluzione si trova già all'interno del file 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+area.asm
+\end_layout
+
+\end_inset
+
+ presente nella cartella scaricata e contiene anche una parte che 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+non
+\end_layout
+
+\end_inset
+
+ viene richiesta nei temi d'esame, cioè le righe dalla 5 alla 14, ma che
+ è necessaria se si vuole simulare l'esecuzione del programma.
+ Questa parte si limita a caricare il valore 7 nell'indirizzo di memoria
+ 0x100 (righe 5-9) e il valore 4 nella cella di memoria 0x102 (righe 10-14),
+ in modo da avere i valori di base e altezza e poter verificare di calcolare
+ il risultato corretto.
+ Il resto del codice, dalla riga 17 alla 27, è quello già visto in precedenza
+ e si occupa di risolvere il problema vero e proprio.
+ Dopo aver mandato in esecuzione questo programma con il comando Run, si
+ può procedere a verificarne la correttezza visualizzando registri e memoria.
+\end_layout
+
+\begin_layout Standard
+Per quanto riguarda i registri si può vedere che il contenuto da R1 a R6
+ è il seguente:
+\end_layout
+
+\begin_layout Quote
+\begin_inset listings
+lstparams "language=bash,basicstyle={\ttfamily},breaklines=true"
+inline false
+status collapsed
+
+\begin_layout Quote
+
+    Register |  Value(hex) |  Value(dec) |
+\end_layout
+
+\begin_layout Quote
+
+------------------------------------------
+\end_layout
+
+\begin_layout Quote
+
+          R1 |       0x100 |         256 |
+\end_layout
+
+\begin_layout Quote
+
+          R2 |       0x102 |         258 |
+\end_layout
+
+\begin_layout Quote
+
+          R3 |       0x104 |         260 |
+\end_layout
+
+\begin_layout Quote
+
+          R4 |         0x7 |           7 |
+\end_layout
+
+\begin_layout Quote
+
+          R5 |         0x4 |           4 |
+\end_layout
+
+\begin_layout Quote
+
+          R6 |        0x1c |          28 |
+\end_layout
+
+\begin_layout Quote
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Quote
+che è proprio quello che ci si attendeva, essendo il risultato, che si trova
+ in R6, quello corretto.
+\end_layout
+
+\begin_layout Quote
+Per la memoria, le tre locazioni che interessano sono la 0x100, 0x102 e
+ 0x104 e il loro contenuto è il seguente:
+\end_layout
+
+\begin_layout Quote
+\begin_inset listings
+lstparams "language=bash,basicstyle={\ttfamily},breaklines=true"
+inline false
+status open
+
+\begin_layout Quote
+
+    Addr(hex) |   Addr(dec) |  Value(hex) |  Value(dec) |
+\end_layout
+
+\begin_layout Quote
+
+--------------------------------------------------------
+\end_layout
+
+\begin_layout Quote
+
+       0x100 |         256 |         0x7 |           7 |
+\end_layout
+
+\begin_layout Quote
+
+       0x101 |         257 |           0 |           0 |
+\end_layout
+
+\begin_layout Quote
+
+       0x102 |         258 |         0x4 |           4 |
+\end_layout
+
+\begin_layout Quote
+
+       0x103 |         259 |           0 |           0 |
+\end_layout
+
+\begin_layout Quote
+
+       0x104 |         260 |        0x1c |          28 |
+\end_layout
+
+\begin_layout Quote
+
+       0x105 |         261 |           0 |           0 |
+\end_layout
+
+\begin_layout Quote
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Quote
+Va notato che viene mostrata anche la cella di indirizzo 0x105 perchè, come
+ già detto, i dati vengono gestiti a blocchi di due byte.
+\end_layout
+
+\begin_layout Quote
+Due ultime osservazioni rispetto a questo codice:
+\end_layout
+
+\begin_layout Itemize
+le righe che iniziano con il simbolo 
+\begin_inset Flex Noun
+status open
+
+\begin_layout Plain Layout
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+#
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ non vengono eseguite, quindi possono contenere qualsiasi cosa, in questo
+ caso dei messaggi di commento.
+ Come si vedrà nel seguito del corso questa è una pratica molto diffusa
+ in tutti i linguaggi per computer e serve agli umani per avere informazioni
+ immediatamente disponibili
+\end_layout
+
+\begin_layout Itemize
+l'ultima riga contiene l'istruzione 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+END
+\end_layout
+
+\end_inset
+
+, che, quando raggiunta, fa fermare il programma.
+ In questo caso se ne sarebbe potuto fare a meno poichè il programma si
+ sarebbe fermato comunque, essendo giunto alla fine, però in altri casi
+ potrebbe essere più utile.
+\end_layout
+
+\begin_layout Standard
+Si vedranno adesso le istruzioni di salto condizionato, che permettono al
+ programma di non dovere per forza seguire un flusso lineare, come visto
+ finora, ma spostarsi da un'istruzione a una qualsiasi altra, non necessariament
+e quella consecutiva.
+ Questo permetterà di scrivere programmi nei quali si potranno implementare
+ delle 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+selezioni
+\end_layout
+
+\end_inset
+
+ e delle 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+iterazioni
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+BRANCH
+\end_layout
+
+\begin_layout Standard
+Le istruzioni di branch
 \end_layout
 
 \begin_layout Section*
