@@ -8,5 +8,5 @@ CFLAGS=-I$(IDIR)
 CPPFLAGS=-std=c++11
 
 sas: $(OBJ)
-	$(CC)  -o sas main.cpp src/*.cpp $(CFLAGS) $(CPPFLAGS)
+	$(CC)  -o simple_assembler_simulator main.cpp src/*.cpp $(CFLAGS) $(CPPFLAGS)
 
