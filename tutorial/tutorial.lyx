@@ -1839,7 +1839,7 @@ si calcoli l'area di un rettangolo, considerando che il valore della base
 \begin_inset listings
 lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
 inline false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -2220,19 +2220,767 @@ iterazioni
 \end_layout
 
 \begin_layout Section
-BRANCH
+Istruzioni di branch
 \end_layout
 
 \begin_layout Standard
-Le istruzioni di branch
+Le istruzioni di 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+branch
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Il nome branch, ramo in italiano, deriva dal fatto che queste istruzioni
+ permettono di generare dei rami di esecuzione che vengono ercrosi al soddisfaci
+mento o meno di certe istruzioni.
+\end_layout
+
+\end_inset
+
+ sono tutte simili tra di loro, quindi ne verrà analizzata solo una, indicando
+ le differenze con le altre.
+\end_layout
+
+\begin_layout Standard
+Fondamentalmente una istruzione di branch ha lo scopo di modificare il flusso
+ lineare delle istruzioni che devono essere eseguite, per spostarsi verso
+ un'istruzione in una posizione arbitraria, in modo da poter implementare
+ un processo di 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+selezione
+\end_layout
+
+\end_inset
+
+ o un'
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+iterazione
+\end_layout
+
+\end_inset
+
+, come si vedrà nei paragrafi successivi.
+\end_layout
+
+\begin_layout Standard
+Le due parti di un'istruzione di branch sono:
+\end_layout
+
+\begin_layout Itemize
+una 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+condizione di confronto
+\end_layout
+
+\end_inset
+
+ (
+\begin_inset Formula $<,\leq,>,\geq,=,\neq)$
+\end_inset
+
+, applicata tra i valori contenuti in due registri, che, se risulta vera,
+ fa saltare l'esecuzione a un'istruzione indicata da una 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+label
+\end_layout
+
+\end_inset
+
+, altrimenti viene ignorata.
+\end_layout
+
+\begin_layout Itemize
+una 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+label
+\end_layout
+
+\end_inset
+
+, cioè un'etichetta linguistica (una parola) che indica la posizione dove
+ saltare con il flusso di esecuzione.
+ Quello che succede all'interno del calcolatore è che, se si effettua un
+ branch, il 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+Program Counter
+\end_layout
+
+\end_inset
+
+, al posto di essere incrementato di una posizione come succede normalmente,
+ assume il valore dell'indirizzo a cui è posta la label.
+ La label evita al programmatore di conoscere l'indirizzo di memoria, sarà
+ l'assemblatore che si occuperà dei dettagli di basso livello.
 \end_layout
 
 \begin_layout Section*
 La selezione
 \end_layout
 
+\begin_layout Standard
+Una selezione viene utilizzata per decidere se effettuare o meno un'azione
+ o una serie di azioni, al verificarsi di una certa condizione.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si confronti il valore di due numeri naturali che si trovano rispettivamente
+ nelle aree di memoria 0x100 e 0x200: se il primo è maggiore del secondo
+ si scriva la loro differenza nell'area di memoria 0x300
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Come si può vedere in questo problema c'è un'azione (la differenza) che
+ deve essere fatta solo se il primo operando è maggiore del secondo.
+ Supponendo di avere già dei valori contenuti nelle posizione 0x100 e 0x200
+ una soluzione potrebbe essere la seguente:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOAD R1 R3
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x02
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOAD R2 R3
+\end_layout
+
+\begin_layout Plain Layout
+
+	BLE R1 R2 FINE
+\end_layout
+
+\begin_layout Plain Layout
+
+	SUB R4 R1 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x03
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	STORE R3 R4
+\end_layout
+
+\begin_layout Plain Layout
+
+FINE: END
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le righe dalla 1 alla 6 non fanno altro che caricare nel registro R1 il
+ valore contenuto alla posizione di memoria di indirizzo 0x100 e nel registro
+ R2 il valore alla posizione 0x200.
+ 
+\end_layout
+
+\begin_layout Standard
+L'istruzione 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+BLE
+\end_layout
+
+\end_inset
+
+ (
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch on 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+L
+\end_layout
+
+\end_inset
+
+ess than or 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+E
+\end_layout
+
+\end_inset
+
+qual) confronta il valore del primo registro (R1) per vedere se è minore
+ o uguale a quello del secondo (R2) e, se lo è, salta all'etichetta 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+FINE
+\end_layout
+
+\end_inset
+
+, che si trova proprio alla fine del programma.
+ Questo produce l'effetto che le righe dalla 8 alla 11 vengono saltate e
+ quindi non viene effettuata la differenza.
+ Se invece la condizione è falsa (cioè se R1 è maggiore di R2), il salto
+ non viene eseguito e il flusso procede normalmente dalla riga 9 in poi,
+ come se non ci fosse l'istruzione di branch.
+\end_layout
+
+\begin_layout Standard
+Un'altra situazione tipica che si può verificare è quella nella quale se
+ si verifica una certa condizione si esegue una determinata azione, altrimenti
+ se ne esegue un'altra.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si confronti il valore di due numeri naturali che si trovano rispettivamente
+ nelle aree di memoria 0x100 e 0x200: se il primo è maggiore del secondo
+ si scriva la differenza nell'area di memoria 0x300, altrimenti si scriva
+ la differenza fra il secondo e il primo sempre nell'area di memoria 0x300.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In questo caso si è aggiunta la differenza tra il secondo e il primo registro
+ quando è il secondo registro a essere maggiore o uguale al primo e il programma
+ risulta modificato nel seguente modo:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOAD R1 R3
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x02
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOAD R2 R3
+\end_layout
+
+\begin_layout Plain Layout
+
+	BGE R2 R1 ELSE
+\end_layout
+
+\begin_layout Plain Layout
+
+	SUB R4 R1 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x03
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	STORE R3 R4
+\end_layout
+
+\begin_layout Plain Layout
+
+	B FINE
+\end_layout
+
+\begin_layout Plain Layout
+
+ELSE: SUB R4 R2 R1
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x03
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	STORE R3 R4
+\end_layout
+
+\begin_layout Plain Layout
+
+FINE: END
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Stavolta ci sono due etichette, 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+ELSE
+\end_layout
+
+\end_inset
+
+ e 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+FINE
+\end_layout
+
+\end_inset
+
+ che servono per effettuare in maniera mutuamente esclusiva due diversi
+ rami di esecuzione.
+ Se la condizione richiesta dal branch alla riga 7, utilizzando stavolta
+ 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+BGE
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Si sarebbe potuto anche utilizzare BLE come nell'esempio precedente, è stata
+ cambiata solo per evidenziare che, a patto di sapere cosa si sta facendo,
+ possono essere usate istruzioni diverse per risolvere lo stesso problema.
+\end_layout
+
+\end_inset
+
+ (
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+G
+\end_layout
+
+\end_inset
+
+reater than or 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+E
+\end_layout
+
+\end_inset
+
+gual) è vera, vengono eseguite le righe dalla 13 alla 16, che fanno la differenz
+a tra R2 e R1.
+ Se invece la condizione è falsa vengono ancora eseguite le istruzioni dalla
+ 8 alla 11, come nell'esercizio precedente, poi l'istruzione in riga 12,
+ che è un salto incondizionato, fa saltare le istruzioni seguenti e porta
+ direttamente alla fine del programma.
+ Come si vede dunque, o verranno eseguite le istruzioni dalla 8 alla 11
+ oppure quelle dalla 13 alla 16.
+\end_layout
+
+\begin_layout Standard
+Da questo esempio dovrebbe anche essere chiaro che possono esserci più etichette
+ all'interno di un programma, ma non possono avere lo stesso nome, poichè
+ altrimenti le istruzioni di branch non potrebbero indicare in maniera univoca
+ dove dirottare il flusso di esecuzione.
+\end_layout
+
+\begin_layout Standard
+Per ricordare le altre istruzioni di branch segue un breve elenco:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+BLT
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+L
+\end_layout
+
+\end_inset
+
+ess 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
+
+han
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+BGT
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+G
+\end_layout
+
+\end_inset
+
+reater 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
+
+han
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+BLT
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+L
+\end_layout
+
+\end_inset
+
+ess 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+T
+\end_layout
+
+\end_inset
+
+han
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+BEQ
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+EQ
+\end_layout
+
+\end_inset
+
+ual
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+BNE
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+N
+\end_layout
+
+\end_inset
+
+ot 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+E
+\end_layout
+
+\end_inset
+
+qual
+\end_layout
+
+\begin_layout Standard
+Che istruzione di branch utilizzare e dove inserire l'etichetta dipende
+ dalle richieste del problema, l'esperienza permette di fare delle scelte
+ ragionevoli che portano al risultato richiesto.
+\end_layout
+
 \begin_layout Section*
 L'iterazione
+\end_layout
+
+\begin_layout Standard
+Spesso i programmi hanno bisogno di di iterare, cioè ripetere, una stessa
+ istruzione o serie di istruzioni per un certo numero di volte, ogni volta
+ con qualche valore differente delle variabile utilizzate.
+ Risolvere questo tipo di problemi richiede di modificare il flusso di un
+ programma in modo che possa 
+\begin_inset Quotes eld
+\end_inset
+
+ritornare indietro
+\begin_inset Quotes erd
+\end_inset
+
+, cioè eseguire istruzioni già fatte in precedenza e continuare in questo
+ modo fino a raggiungere il risultato desiderato.
 \end_layout
 
 \end_body
