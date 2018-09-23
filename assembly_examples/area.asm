@@ -1,0 +1,27 @@
+# Input: the width and the height of a rectangle
+# Output: the area
+
+#Preload
+LOADiL R1 0x00
+LOADiH R1 0x01
+LOADiL R2 0x07
+LOADiH R2 0x00
+STORE R1 R2
+LOADiL R1 0x02
+LOADiH R1 0x01
+LOADiL R2 0x04
+LOADiH R2 0x00
+STORE R1 R2
+
+#The solution
+LOADiL R1 0x00
+LOADiH R1 0x01
+LOADiL R2 0x02
+LOADiH R2 0x01
+LOADiL R3 0x04
+LOADiH R3 0x01
+LOAD R4 R1
+LOAD R5 R2
+MUL R6 R4 R5
+STORE R3 R6
+END
