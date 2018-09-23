@@ -2246,8 +2246,8 @@ mento o meno di certe istruzioni.
 
 \end_inset
 
- sono tutte simili tra di loro, quindi ne verrà analizzata solo una, indicando
- le differenze con le altre.
+ sono tutte simili tra di loro, quindi ne verrnno analizzate solo un paio,
+ indicando le differenze con le altre.
 \end_layout
 
 \begin_layout Standard
@@ -2340,7 +2340,7 @@ Program Counter
  l'assemblatore che si occuperà dei dettagli di basso livello.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 La selezione
 \end_layout
 
@@ -2376,6 +2376,9 @@ si confronti il valore di due numeri naturali che si trovano rispettivamente
 \end_layout
 
 \begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
 Come si può vedere in questo problema c'è un'azione (la differenza) che
  deve essere fatta solo se il primo operando è maggiore del secondo.
  Supponendo di avere già dei valori contenuti nelle posizione 0x100 e 0x200
@@ -2481,7 +2484,7 @@ B
 
 \end_inset
 
-ranch on 
+ranch
 \begin_inset Flex Strong
 status open
 
@@ -2521,9 +2524,8 @@ FINE
 \end_layout
 
 \begin_layout Standard
-Un'altra situazione tipica che si può verificare è quella nella quale se
- si verifica una certa condizione si esegue una determinata azione, altrimenti
- se ne esegue un'altra.
+Un'altra situazione tipica che si può verificare è quella che, se una condizione
+ è vera, si esegue una determinata azione, altrimenti se ne esegue un'altra.
 \end_layout
 
 \begin_layout Standard
@@ -2553,6 +2555,9 @@ si confronti il valore di due numeri naturali che si trovano rispettivamente
 \end_layout
 
 \begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
 In questo caso si è aggiunta la differenza tra il secondo e il primo registro
  quando è il secondo registro a essere maggiore o uguale al primo e il programma
  risulta modificato nel seguente modo:
@@ -2956,20 +2961,43 @@ E
 qual
 \end_layout
 
+\begin_layout Itemize
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+B
+\end_layout
+
+\end_inset
+
+ranch (senza condizioni)
+\end_layout
+
 \begin_layout Standard
 Che istruzione di branch utilizzare e dove inserire l'etichetta dipende
  dalle richieste del problema, l'esperienza permette di fare delle scelte
  ragionevoli che portano al risultato richiesto.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection
 L'iterazione
 \end_layout
 
 \begin_layout Standard
-Spesso i programmi hanno bisogno di di iterare, cioè ripetere, una stessa
- istruzione o serie di istruzioni per un certo numero di volte, ogni volta
- con qualche valore differente delle variabile utilizzate.
+Spesso i programmi hanno bisogno di iterare, cioè ripetere, una stessa istruzion
+e o serie di istruzioni per un certo numero di volte, ogni volta con qualche
+ valore differente delle variabili utilizzate.
  Risolvere questo tipo di problemi richiede di modificare il flusso di un
  programma in modo che possa 
 \begin_inset Quotes eld
@@ -2981,6 +3009,183 @@ ritornare indietro
 
 , cioè eseguire istruzioni già fatte in precedenza e continuare in questo
  modo fino a raggiungere il risultato desiderato.
+ Anche in questo caso un esempio chiarirà il tipo di effetto che si vuole
+ ottenere attraverso opportune istruzioni di branch.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Flex Strong
+status open
+
+\begin_layout Plain Layout
+Problema
+\end_layout
+
+\end_inset
+
+: 
+\begin_inset Flex Emph
+status open
+
+\begin_layout Plain Layout
+si verifichi se il numero naturale alla cella di memoria 0x100 è divisibile
+ esattamente per il numero che si trova nella cella 0x200: se è divisibile
+ scrivere il valore 1 nella cella di memoria 0x300, altrimenti il valore
+ 0.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+Anche in questo caso si supponga che le celle in posizione 0x100 e 0x200
+ contengano già dei valori, in particolare 0x15 (21 decimale) e 0x7 (7 decimale)
+ e il programma seguente debba qundi verificare se 0x15 è esattamente divisibile
+ per 0x7.
+ Una possibile soluzione prevede che venga sottratto il secondo valore (il
+ 7 in questo esempio) dal primo valore (lo 0x15), mettendo il risultato
+ al posto del primo valore.
+ Se si procede in questo modo fino a quando il primo valore è maggiore del
+ secondo, questa serie di iterazioni si arresterà quando il primo valore
+ diventerà minore o uguale al secondo.
+ A questo punto sarà possibile rispondere alla domanda iniziale semplicemente
+ verificando se i due valori sono uguali, quindi il primo valore era esattamente
+ divisibile per il secondo, in caso contrario non lo era.
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "language=bash,numbers=left,basicstyle={\ttfamily},frame=TB"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOAD R1 R3
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiH R3 0x02
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOAD R2 R3
+\end_layout
+
+\begin_layout Plain Layout
+
+	B CONTROLLO
+\end_layout
+
+\begin_layout Plain Layout
+
+CICLO: SUB R1 R1 R2
+\end_layout
+
+\begin_layout Plain Layout
+
+CONTROLLO: BGT R1 R2 CICLO
+\end_layout
+
+\begin_layout Plain Layout
+
+	BNE R1 R2 NO
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiH R4 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R4 0x01
+\end_layout
+
+\begin_layout Plain Layout
+
+	B CARICA
+\end_layout
+
+\begin_layout Plain Layout
+
+NO: LOADiH R4 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R4 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+CARICA: LOADiH R3 0x03
+\end_layout
+
+\begin_layout Plain Layout
+
+	LOADiL R3 0x00
+\end_layout
+
+\begin_layout Plain Layout
+
+	STORE R3 R4
+\end_layout
+
+\begin_layout Plain Layout
+
+	END
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Le prime 6 righe caricano nei registri R1 e R2 i valori contenuti nelle
+ celle 0x100 e 0x200, rispettivamente.
+ Il salto incondizionato alla riga 7 porta subito il programma alla riga
+ 9, dove viene verificata la condizione che il valore contenuto in R1 sia
+ maggiore di quello contenuto in R2.
+ L'istruzione di salto permette quindi di ritornare a un'istruzione precedente
+ (la riga 8), nel caso la condizione sia vera.
+ Con i valori di esempio quindi il valore 0x7 viene sottratto al valore
+ 0x15 contenuto nel registro R1 e si prosegue verificando la condizione
+ alla riga 9.
+ Le righe 8-9 rappresentano così un costrutto iterativo, dove una stessa
+ istruzione viene ripetuta un numero indeterminato di volte.
+ Quando la condizione alla riga 9 diventerà falsa il flusso del programma
+ continuerà alla riga 10, dove verrà effettuata una selezione sulla condizione
+ R1
+\begin_inset Formula $\neq$
+\end_inset
+
+R2, inserendo il valore 1 o il valore 0 nella cella di memoria 0x300, in
+ base alla verità o falsità di quella condizione, risolvendo così il problema
+ richiesto.
 \end_layout
 
 \end_body
