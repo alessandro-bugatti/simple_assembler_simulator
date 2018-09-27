@@ -12,7 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option parameters="test.asm" />
+				<Option parameters="assembly1.asm" />
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
@@ -49,6 +49,7 @@
 		<Unit filename="include/bne.h" />
 		<Unit filename="include/branch.h" />
 		<Unit filename="include/computer.h" />
+		<Unit filename="include/div.h" />
 		<Unit filename="include/end.h" />
 		<Unit filename="include/instruction.h" />
 		<Unit filename="include/instructionsfactory.h" />
@@ -74,6 +75,7 @@
 		<Unit filename="src/bne.cpp" />
 		<Unit filename="src/branch.cpp" />
 		<Unit filename="src/computer.cpp" />
+		<Unit filename="src/div.cpp" />
 		<Unit filename="src/end.cpp" />
 		<Unit filename="src/instruction.cpp" />
 		<Unit filename="src/instructionsfactory.cpp" />
