@@ -40,7 +40,7 @@ Instruction* InstructionsFactory::CreateInstruction(Computer *c,const string& li
         tokens.erase(tokens.begin());
     string type = tokens.at(0);
     string parameters;
-    for (int i = 1; i < tokens.size() ; i++)
+    for (unsigned int i = 1; i < tokens.size() ; i++)
     {
         parameters += tokens.at(i) + " ";
     }
