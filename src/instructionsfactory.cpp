@@ -5,6 +5,7 @@
 #include "add.h"
 #include "sub.h"
 #include "mul.h"
+#include "div.h"
 #include "load.h"
 #include "move.h"
 #include "blt.h"
@@ -57,6 +58,8 @@ Instruction* InstructionsFactory::CreateInstruction(Computer *c,const string& li
         return new Sub(c, parameters);
     if (Utils::areEquals(type,"MUL"))
         return new Mul(c, parameters);
+    if (Utils::areEquals(type,"DIV"))
+        return new Div(c, parameters);
     if (Utils::areEquals(type,"LOAD"))
         return new Load(c, parameters);
     if (Utils::areEquals(type,"MOVE"))
