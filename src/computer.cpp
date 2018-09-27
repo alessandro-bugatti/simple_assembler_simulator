@@ -9,6 +9,8 @@ Computer::Computer(unsigned int m)
 {
     memory_size = m;
     memory = new uint8_t[memory_size];
+    for (unsigned int i = 0; i < memory_size; i++)
+        memory[i] = 0;
     //Creating 16 generic registers
 
     //Here from R0 to R9
