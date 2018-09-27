@@ -36,13 +36,30 @@
 			<Add option="-fexceptions" />
 			<Add directory="../include" />
 		</Compiler>
+		<Unit filename="../src/add.cpp" />
 		<Unit filename="../src/assembly_error.cpp" />
+		<Unit filename="../src/b.cpp" />
+		<Unit filename="../src/beq.cpp" />
+		<Unit filename="../src/bge.cpp" />
+		<Unit filename="../src/bgt.cpp" />
+		<Unit filename="../src/ble.cpp" />
+		<Unit filename="../src/blt.cpp" />
+		<Unit filename="../src/bne.cpp" />
+		<Unit filename="../src/branch.cpp" />
 		<Unit filename="../src/computer.cpp" />
+		<Unit filename="../src/div.cpp" />
+		<Unit filename="../src/end.cpp" />
 		<Unit filename="../src/instruction.cpp" />
 		<Unit filename="../src/instructionsfactory.cpp" />
+		<Unit filename="../src/load.cpp" />
 		<Unit filename="../src/loadih.cpp" />
 		<Unit filename="../src/loadil.cpp" />
+		<Unit filename="../src/move.cpp" />
+		<Unit filename="../src/mul.cpp" />
+		<Unit filename="../src/print.cpp" />
 		<Unit filename="../src/program.cpp" />
+		<Unit filename="../src/store.cpp" />
+		<Unit filename="../src/sub.cpp" />
 		<Unit filename="../src/utils.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>

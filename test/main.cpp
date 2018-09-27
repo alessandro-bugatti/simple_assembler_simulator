@@ -52,3 +52,21 @@ TEST_CASE( "InstructionFactory", "[instruction][factory]" ) {
     }
 }
 
+TEST_CASE( "Div", "[div][instruction]" ) {
+    Computer c(10000);
+    c.setRegisterValue("R1",100);
+    c.setRegisterValue("R2",50);
+    c.loadProgram("test_div.asm");
+    SECTION( "No reminder" ) {
+        c.run();
+        unsigned int result = c.getRegisterValue("R3");
+        REQUIRE(result == 2);
+    }
+    SECTION( "Reminder" ) {
+        c.setRegisterValue("R2",51);
+        c.run();
+        unsigned int result = c.getRegisterValue("R3");
+        REQUIRE(result == 1);
+    }
+}
+
